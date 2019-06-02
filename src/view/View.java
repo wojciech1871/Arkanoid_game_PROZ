@@ -6,12 +6,10 @@ import javax.swing.*;
 
 public class View extends JFrame {
 
-    private Model theModel;
     private Board theBoard;
 
     public View(Model theModel) {
 
-        this.theModel = theModel;
         this.theBoard = new Board(theModel);
         initUI();
     }
@@ -22,7 +20,7 @@ public class View extends JFrame {
         setTitle("Breakout");
         
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(Commons.WIDTH, Commons.HEIGTH);
+        setSize(Model.WIDTH, Model.HEIGTH);
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);

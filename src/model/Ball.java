@@ -3,7 +3,7 @@ package model;
 import javax.swing.ImageIcon;
 
 
-public class Ball extends Sprite implements Commons {
+public class Ball extends Sprite {
 
     private int xdir;
     private int ydir;
@@ -38,7 +38,7 @@ public class Ball extends Sprite implements Commons {
             setXDir(1);
         }
 
-        if (x == WIDTH - imageWidth) {
+        if (x == Model.WIDTH - imageWidth) {
             setXDir(-1);
         }
 
@@ -49,8 +49,8 @@ public class Ball extends Sprite implements Commons {
 
     private void resetState() {
 
-        x = INIT_BALL_X;
-        y = INIT_BALL_Y;
+        x = Model.INIT_BALL_X;
+        y = Model.INIT_BALL_Y;
     }
 
     public void setXDir(int x) {

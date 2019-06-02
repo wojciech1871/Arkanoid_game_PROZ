@@ -2,9 +2,10 @@ package model;
 
 import javax.swing.ImageIcon;
 
-public class Paddle extends Sprite implements Commons {
+public class Paddle extends Sprite {
 
     private int dx;
+    private int speed = 1;
 
     public Paddle() {
         
@@ -23,7 +24,11 @@ public class Paddle extends Sprite implements Commons {
         
         ImageIcon ii = new ImageIcon("src/resources/paddle.png");
         image = ii.getImage();        
-    }    
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
 
     public void move() {
 
@@ -33,17 +38,17 @@ public class Paddle extends Sprite implements Commons {
             x = 0;
         }
 
-        if (x >= WIDTH - imageWidth) {
-            x = WIDTH - imageWidth;
+        if (x >= Model.WIDTH - imageWidth) {
+            x = Model.WIDTH - imageWidth;
         }
     }
 
     public void moveRight() {
-        dx = 1;
+        dx = speed;
     }
 
     public void moveLeft() {
-        dx = -1;
+        dx = -speed;
     }
 
     public void stopMove() {
@@ -52,7 +57,7 @@ public class Paddle extends Sprite implements Commons {
 
     private void resetState() {
 
-        x = INIT_PADDLE_X;
-        y = INIT_PADDLE_Y;
+        x = Model.INIT_PADDLE_X;
+        y = Model.INIT_PADDLE_Y;
     }
 }

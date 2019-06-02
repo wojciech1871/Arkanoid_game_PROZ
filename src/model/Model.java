@@ -4,18 +4,77 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Model implements Commons {
+public class Model {
+
+    public static final int WIDTH = 300;
+    public static final int HEIGTH = 400;
+    public static final int BOTTOM_EDGE = 390;
+    public static final int INIT_PADDLE_X = 200;
+    public static final int INIT_PADDLE_Y = 360;
+    public static final int INIT_BALL_X = 230;
+    public static final int INIT_BALL_Y = 355;
+    public static final int DELAY = 1000;
+    public static final int PERIOD = 10;
 
     private Ball ball;
     private Paddle paddle;
     private Brick bricks[];
+
+    private int numberOfBricks;
     private boolean inGame = true;
+
+    private Level level1;
+    private Level level2;
 
     private List<GameEndListener> gameEndListeners =  new ArrayList<>();
 
 
     public Model() {
-        gameInit();
+        this.level1 = new Level() {
+            @Override
+            public int getPaddleSpeed() {
+                return 2;
+            }
+
+            @Override
+            public int getNumOfBricks() {
+                return 30;
+            }
+
+            @Override
+            public void generateMap(Brick[] brick) {
+                int k = 0;
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 6; j++) {
+                        bricks[k] = new Brick(j * 40 + 30, i * 10 + 50);
+                        k++;
+                    }
+                }
+            }
+        };
+        this.level2 = new Level() {
+            @Override
+            public int getPaddleSpeed() {
+                return 1;
+            }
+
+            @Override
+            public int getNumOfBricks() {
+                return 48;
+            }
+
+            @Override
+            public void generateMap(Brick[] brick) {
+                int k = 0;
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 6; j++) {
+                        bricks[k] = new Brick(j * 40 + 30, i * 10 + 50);
+                        k++;
+                    }
+                }
+            }
+        };
+        gameInit(level1);
     }
 
     public void addListener(GameEndListener toAdd) {
@@ -27,28 +86,20 @@ public class Model implements Commons {
             listener.gameEnd(message);
     }
 
-    public Ball getBall() {
-        return ball;
+    public int getNumberOfBricks() {
+        return numberOfBricks;
     }
 
-    public void setBall(Ball ball) {
-        this.ball = ball;
+    public Ball getBall() {
+        return ball;
     }
 
     public Paddle getPaddle() {
         return paddle;
     }
 
-    public void setPaddle(Paddle paddle) {
-        this.paddle = paddle;
-    }
-
     public Brick[] getBricks() {
         return bricks;
-    }
-
-    public void setBricks(Brick[] bricks) {
-        this.bricks = bricks;
     }
 
     public boolean isInGame() {
@@ -59,19 +110,14 @@ public class Model implements Commons {
         this.inGame = inGame;
     }
 
-    public void gameInit() {
-
+    public void gameInit(Level level) {
         ball = new Ball();
         paddle = new Paddle();
-        bricks = new Brick[N_OF_BRICKS];
+        paddle.setSpeed(level.getPaddleSpeed());
 
-        int k = 0;
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 6; j++) {
-                bricks[k] = new Brick(j * 40 + 30, i * 10 + 50);
-                k++;
-            }
-        }
+        numberOfBricks = level.getNumOfBricks();
+        bricks = new Brick[numberOfBricks];
+        level.generateMap(bricks);
     }
 
     public void moveBall() {
@@ -96,17 +142,17 @@ public class Model implements Commons {
 
     public void checkCollision() {
 
-        if (ball.getRect().getMaxY() > Commons.BOTTOM_EDGE) {
+        if (ball.getRect().getMaxY() > BOTTOM_EDGE) {
             gameEnd("Game loss");
         }
 
-        for (int i = 0, j = 0; i < N_OF_BRICKS; i++) {
+        for (int i = 0, j = 0; i < numberOfBricks; i++) {
 
             if (bricks[i].isDestroyed()) {
                 j++;
             }
 
-            if (j == N_OF_BRICKS) {
+            if (j == numberOfBricks) {
                 gameEnd("Game vin");
             }
         }
@@ -147,7 +193,7 @@ public class Model implements Commons {
             }
         }
 
-        for (int i = 0; i < N_OF_BRICKS; i++) {
+        for (int i = 0; i < numberOfBricks; i++) {
 
             if ((ball.getRect()).intersects(bricks[i].getRect())) {
 
@@ -178,5 +224,12 @@ public class Model implements Commons {
                 }
             }
         }
+    }
+    public Level getLevel1() {
+        return level1;
+    }
+
+    public Level getLevel2() {
+        return level2;
     }
 }

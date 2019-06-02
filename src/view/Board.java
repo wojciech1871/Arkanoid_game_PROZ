@@ -5,7 +5,7 @@ import model.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class Board extends JPanel implements Commons {
+public class Board extends JPanel {
 
     private String message;
     private Model theModel;
@@ -58,7 +58,7 @@ public class Board extends JPanel implements Commons {
         g2d.drawImage(paddle.getImage(), paddle.getX(), paddle.getY(),
                 paddle.getImageWidth(), paddle.getImageHeight(), this);
 
-        for (int i = 0; i < N_OF_BRICKS; i++) {
+        for (int i = 0; i < theModel.getNumberOfBricks(); i++) {
             if (!bricks[i].isDestroyed()) {
                 g2d.drawImage(bricks[i].getImage(), bricks[i].getX(),
                         bricks[i].getY(), bricks[i].getImageWidth(),
@@ -75,7 +75,7 @@ public class Board extends JPanel implements Commons {
         g2d.setColor(Color.BLACK);
         g2d.setFont(font);
         g2d.drawString(message,
-                (Commons.WIDTH - metr.stringWidth(message)) / 2,
-                Commons.WIDTH / 2);
+                (Model.WIDTH - metr.stringWidth(message)) / 2,
+                Model.WIDTH / 2);
     }
 }

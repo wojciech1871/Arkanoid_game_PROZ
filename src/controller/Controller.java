@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Controller implements Commons, GameEndListener {
+public class Controller implements GameEndListener {
 
     private Timer timer;
 
@@ -33,7 +33,7 @@ public class Controller implements Commons, GameEndListener {
         theBoard.boardInit();
 
         timer = new Timer();
-        timer.scheduleAtFixedRate(new ScheduleTask(), DELAY, PERIOD);
+        timer.scheduleAtFixedRate(new ScheduleTask(), Model.DELAY, Model.PERIOD);
     }
 
 
@@ -49,7 +49,7 @@ public class Controller implements Commons, GameEndListener {
         }
         finally {
             theModel.setInGame(true);
-            theModel.gameInit();
+            theModel.gameInit(theModel.getLevel2());
             timer.cancel();
             initController();
         }
