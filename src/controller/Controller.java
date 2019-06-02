@@ -14,17 +14,11 @@ public class Controller implements Commons, GameEndListener {
     private Timer timer;
 
     private Model theModel;
-    private View theView;
-
     private Board theBoard;
 
-    private Paddle paddle;
-    private Ball ball;
-    private Brick bricks[];
 
     public Controller(Model theModel, View theView) {
         this.theModel = theModel;
-        this.theView = theView;
         this.theBoard = theView.getTheBoard();
 
         theBoard.addKeyListener(new TAdapter());
@@ -37,10 +31,6 @@ public class Controller implements Commons, GameEndListener {
     private void initController() {
 
         theBoard.boardInit();
-
-        paddle = theModel.getPaddle();
-        ball = theModel.getBall();
-        bricks = theModel.getBricks();
 
         timer = new Timer();
         timer.scheduleAtFixedRate(new ScheduleTask(), DELAY, PERIOD);
@@ -70,12 +60,19 @@ public class Controller implements Commons, GameEndListener {
 
         @Override
         public void keyReleased(KeyEvent e) {
-            paddle.keyReleased(e);
+            if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                theModel.stopPaddle();
+            }
         }
 
         @Override
         public void keyPressed(KeyEvent e) {
-            paddle.keyPressed(e);
+            if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                theModel.setPaddleRight();
+            }
+            else if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+                theModel.setPaddleLeft();
+            }
         }
     }
 
@@ -83,8 +80,8 @@ public class Controller implements Commons, GameEndListener {
 
         @Override
         public void run() {
-            ball.move();
-            paddle.move();
+            theModel.moveBall();
+            theModel.movePaddle();
             theModel.checkCollision();
             theBoard.repaint();
         }

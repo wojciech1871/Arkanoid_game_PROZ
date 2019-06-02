@@ -1,6 +1,6 @@
 package model;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
 
 
 public class Ball extends Sprite implements Commons {

@@ -1,7 +1,6 @@
 package view;
 
-import model.Commons;
-import model.Model;
+import model.*;
 
 import javax.swing.*;
 

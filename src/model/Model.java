@@ -74,6 +74,26 @@ public class Model implements Commons {
         }
     }
 
+    public void moveBall() {
+        ball.move();
+    }
+
+    public void stopPaddle() {
+        paddle.stopMove();
+    }
+
+    public void setPaddleRight() {
+        paddle.moveRight();
+    }
+
+    public void setPaddleLeft() {
+        paddle.moveLeft();
+    }
+
+    public void movePaddle() {
+        paddle.move();
+    }
+
     public void checkCollision() {
 
         if (ball.getRect().getMaxY() > Commons.BOTTOM_EDGE) {

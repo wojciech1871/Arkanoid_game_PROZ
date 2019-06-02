@@ -2,7 +2,7 @@ import controller.Controller;
 import view.View;
 import model.Model;
 
-import java.awt.*;
+import java.awt.EventQueue;
 
 public class Main {
 
