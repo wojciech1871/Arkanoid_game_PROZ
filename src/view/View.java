@@ -17,7 +17,7 @@ public class View extends JFrame {
     private void initUI() {
         
         add(theBoard);
-        setTitle("Breakout");
+        setTitle("Arkanoid Game");
         
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(Model.WIDTH, Model.HEIGTH);
